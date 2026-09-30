@@ -29,7 +29,8 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
     h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
-    p { font-size: 0.95rem; color: #3a3a3c; margin-bottom: 8px; }
+    p, li { font-size: 0.95rem; color: #3a3a3c; margin-bottom: 8px; }
+    ul { padding-left: 1.2em; }
     a { color: #6366f1; text-decoration: none; }
     a:hover { text-decoration: underline; }
     footer { text-align: center; font-size: 0.8rem; color: #6e6e73; padding: 24px 16px; }
@@ -42,40 +43,48 @@
 </header>
 <main>
   <section>
-    <h2>1. 収集する情報</h2>
-    <p>診断結果、人脈データ、メモ、履歴はすべてお使いの端末内（localStorage）にのみ保存されます。本アプリはアカウント登録を求めず、これらのデータを当社のサーバーへ送信しません。</p>
-    <p><strong>iOS版：</strong>iOS版は、ユーザーID、端末ID、購入履歴、閲覧・利用状況、クラッシュ情報を当社または第三者が収集する機能を備えていません。App Storeのプライバシー表示では「データの収集なし」となります。</p>
+    <h2>1. 端末内に保存する情報</h2>
+    <p>診断結果、人脈データ（名前・関係・メモ）、診断の履歴は、お使いの端末内（localStorage）にのみ保存します。本アプリはアカウント登録を求めず、これらのデータを当社のサーバーへ送信しません。</p>
   </section>
   <section>
-    <h2>2. 第三者サービスとトラッキング</h2>
-    <p>本アプリは広告SDK、アクセス解析SDK、クラッシュレポートSDK、トラッキングSDKを組み込んでいません。広告目的または広告測定目的で、アプリ内のデータを他社のアプリ・Webサイト等のデータと結び付けることはありません。</p>
-    <p><strong>iOS版の課金：</strong>Premiumサブスクリプションの価格取得、購入、復元、利用資格の確認は Apple の App Store（StoreKit）で直接処理します。当社は購入者ID、端末ID、購入履歴、支払情報を受け取りまたは保存しません。支払情報は Apple の決済画面で処理されます。</p>
-    <p><strong>Android版の課金：</strong>Android版では、購入・復元と利用資格の確認のために RevenueCat を利用します。RevenueCat は機能提供に必要な匿名のアプリ利用者識別子および購入・利用資格情報を取り扱う場合があります。氏名、メールアドレス、人脈データ、診断結果、メモは RevenueCat に送信しません。詳細は <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat プライバシーポリシー</a> をご確認ください。</p>
+    <h2>2. 外部AIへの送信（Premium・同意した場合のみ）</h2>
+    <p>Premium の「AIディープダイブ」「AI関係ヒント」を使うときは、送信先と送る内容を示す確認画面を表示し、同意された場合に限って次の内容を送信します。</p>
+    <ul>
+      <li>送信する内容: 診断タイプ（ギバー・マッチャー・テイカー）と3タイプの点数。AI関係ヒントでは、選んだ「自分」と「相手」のタイプ名のみ。</li>
+      <li>送信先: 当社が運営する Cloudflare Worker（Cloudflare, Inc.）を経由して、Google LLC の生成AI（Gemini API）へ送り、回答を作成します。</li>
+      <li>送信しないもの: 人脈に登録した名前・関係・メモ、診断の履歴。</li>
+    </ul>
+    <p>Google は同社の規約に基づいて送信内容を処理します。同意しない場合は何も送信しません。同意はアプリの「その他」タブ →「AIへの送信」からいつでも取り消せます。無料版では外部AIへの送信は行いません。</p>
   </section>
   <section>
-    <h2>3. データの保存と削除</h2>
-    <p>データはお使いの端末の localStorage に保存されます。アプリ内「About タブ → 全データ削除」から全データを削除できます。アプリのアンインストールによっても削除されます。</p>
+    <h2>3. 自社アプリのお知らせ（自社広告）</h2>
+    <p>無料版では、当社の他のアプリのお知らせを表示します。表示のために当社サーバー（ads.burningtribe.tokyo）からお知らせの一覧を取得し、表示回数とタップ回数を集計します。送るのは本アプリ名・表示したお知らせ・OS の種類だけで、端末IDや広告IDなど個人や端末を識別する情報は送りません。Premium の方、購読状態の確認中、アプリがバックグラウンドにあるときは通信しません。</p>
+    <p>本アプリは第三者の広告SDK（Google AdMob など）、アクセス解析SDK、トラッキングSDKを組み込んでいません。広告ID（IDFA / 広告ID）を取得せず、App Tracking Transparency の許可も求めません。</p>
   </section>
   <section>
-    <h2>4. お子様のプライバシー</h2>
+    <h2>4. サブスクリプション（課金）</h2>
+    <p>iOS版：価格の取得、購入、復元、利用資格の確認は Apple の App Store（StoreKit）で直接処理します。当社は支払情報を受け取りません。</p>
+    <p>Android版：購入・復元と利用資格の確認のために RevenueCat, Inc. を利用します。RevenueCat は、機能の提供に必要な匿名のアプリ利用者識別子と購入・利用資格の情報を取り扱います。名前、メールアドレス、人脈データ、診断結果は RevenueCat に送りません。詳しくは <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat のプライバシーポリシー</a>をご確認ください。</p>
+    <p>プラン（月額・年額）、価格、無料トライアルの有無は、購入前に App Store / Google Play の表示をご確認ください。</p>
+  </section>
+  <section>
+    <h2>5. データの削除</h2>
+    <p>アプリの「その他」タブ →「全データ削除」から、端末内のすべてのデータを削除できます。アプリのアンインストールでも削除されます。</p>
+  </section>
+  <section>
+    <h2>6. お子様のプライバシー</h2>
     <p>本アプリは 13 歳未満のお子様を対象としていません。</p>
   </section>
   <section>
-    <h2>5. サブスクリプション</h2>
-    <p>Premium月額プランは初回2週間無料のトライアル後、自動的に課金が開始されます。価格は App Store に表示される金額（日本国内: 月額500円）が適用されます。サブスクリプションはいつでも端末の App Store 設定からキャンセルできます。利用規約（EULA）は <a href="./terms.html">こちら</a> をご覧ください。</p>
-  </section>
-  <section>
-    <h2>6. お問い合わせ</h2>
+    <h2>7. お問い合わせ</h2>
     <p>プライバシーに関するご質問は <a href="mailto:burningtribe.apps@gmail.com">burningtribe.apps@gmail.com</a> までご連絡ください。</p>
-    <p>開発者: バーニングトライブ</p>
+    <p>運営: 株式会社バーニングトライブ</p>
   </section>
   <section>
-    <h2>7. ポリシーの変更</h2>
-    <p>本ポリシーは予告なく変更される場合があります。最終更新日: 2026年7月27日</p>
+    <h2>8. ポリシーの変更</h2>
+    <p>本ポリシーを変更する場合は、このページでお知らせします。最終更新日: 2026年9月24日</p>
   </section>
 </main>
-<footer>
-  <p>© 2026 バーニングトライブ. All rights reserved.</p>
-</footer>
+<footer>© 2026 株式会社バーニングトライブ. All rights reserved.</footer>
 </body>
 </html>
